@@ -60,7 +60,7 @@ def generate():
         indir = FLAGS.input + "/"
         while tf.gfile.Exists(indir + "%06d.txt" % count):
           print("saving %06d" % count)
-          image0 = misc.imread(indir + "%06d.png" % (count * 2))
+          image0 = misc.imread(indir + "%06d.png" % (count * 2)) # 每两张图片是对应的 [o,1] [2,3] [4,5] [6,7] 各为对应的图片 
           image1 = misc.imread(indir + "%06d.png" % (count * 2 + 1))
 
           mat0, mat1 = read_model_view_matrices(indir + "%06d.txt" % count) # mat0 是txt文件里的前4行，mat1是后四行 
