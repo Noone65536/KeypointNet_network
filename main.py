@@ -63,6 +63,7 @@ tf.app.flags.DEFINE_integer(
 vw = vh = 128
 
 
+# 读取tfrecores的函数
 def create_input_fn(split, batch_size):
   """Returns input_fn for tf.estimator.Estimator.
 
@@ -85,8 +86,8 @@ def create_input_fn(split, batch_size):
     raise IOError("test.txt or dev.txt not found")
 
   with open(os.path.join(FLAGS.dset, "test.txt"), "r") as f:
-    testset = [x.strip() for x in f.readlines()]
-
+    testset = [x.strip() for x in f.readlines()] #.strip是为了去除头尾的空格 
+    
   with open(os.path.join(FLAGS.dset, "dev.txt"), "r") as f:
     validset = [x.strip() for x in f.readlines()]
 
@@ -103,15 +104,16 @@ def create_input_fn(split, batch_size):
 
   def input_fn():
     """input_fn for tf.estimator.Estimator."""
-
+    
+    # 读取tfrecord的地方
     def parser(serialized_example):
       """Parses a single tf.Example into image and label tensors."""
       fs = tf.parse_single_example(
           serialized_example,
           features={
               "img0": tf.FixedLenFeature([], tf.string),
-              "img1": tf.FixedLenFeature([], tf.string),
-              "mv0": tf.FixedLenFeature([16], tf.float32),
+              "img1": tf.FixedLenFeature([], tf.string),    # 两张图片
+              "mv0": tf.FixedLenFeature([16], tf.float32),  # 这4个是6d位姿吗？ 
               "mvi0": tf.FixedLenFeature([16], tf.float32),
               "mv1": tf.FixedLenFeature([16], tf.float32),
               "mvi1": tf.FixedLenFeature([16], tf.float32),
