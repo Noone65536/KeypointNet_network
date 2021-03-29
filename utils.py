@@ -207,7 +207,7 @@ def train_and_eval(
   tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)
 
 
-def draw_circle(rgb, u, v, col, r):
+def draw_circle(rgb, u, v, col, r):  # 用于画标记keypoint的小圆圈的函数
   """Draws a simple anti-aliasing circle in-place.
 
   Args:
@@ -240,7 +240,7 @@ def draw_circle(rgb, u, v, col, r):
           rgb[nv, nu, :] = col * t + rgb[nv, nu, :] * (1-t)
 
 
-def draw_ndc_points(rgb, xy, cols):
+def draw_ndc_points(rgb, xy, cols):  # 画keypoint的函数，用上一个画小圈的函数画keypoint
   """Draws keypoints onto an input image.
 
   Args:
